@@ -180,11 +180,18 @@ class function {
       fill(255);
     }
     rect(600, 725, 150, 50);
+        if (mouseX>600 && mouseX<750 && mouseY>575 && mouseY<625) {
+      fill(#08AD00);
+    } else {
+      fill(255);
+    }
+    rect(600, 575, 150, 50);
     fill(0);
     textSize(12);
     text("Run one cycle", 235, 750);
     text("Run to 100%", 435, 750);
     text("Reset weights", 635, 750);
+    text("Matrix multiplication", 615, 600);
     fill(255);
     strokeWeight(2);
     for (int i=1; i<=9; i++) {
@@ -201,6 +208,7 @@ class function {
         } else {
           stroke(255);
         }
+        strokeWeight(abs(frontweight[i][j]*10));
         line(100, (j+1)*80, 400, (i+1)*130);
       }
     }
@@ -210,6 +218,7 @@ class function {
       } else {
         stroke(255);
       }
+      strokeWeight(abs(backweight[0][i]*10));
       line(400, (i+1)*130, 700, 400);
     }
     fill(0);

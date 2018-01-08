@@ -2,7 +2,7 @@ Table train;
 ArrayList<testperson> trainpeople, testpeople;
 float[][] frontweight, backweight;
 float eint =2.71828182845904523536028747135266249775724709369995;
-float learningnum = 0.001;
+float learningnum = 0.01;
 function func;
 float totalerror;
 int testnum=0;
@@ -14,13 +14,18 @@ boolean[] realpeople;
 float realsurvive;
 boolean calculate=false;
 boolean finalpage=false;
-
+boolean matrixpage=false;
+PImage multi,onet;
 void setup() {
   size(800, 800);
   realpeople=new boolean[24];
   String[] realstringmaker={"Pclass", "First class", "Second class", "Third class", "Name", "Mr.", "Mrs, Miss, or Ms.", "Other", "Sex", "Male", "Female", "", "Age", "Less than 18", "Less than 40", "Greater than 40", "Siblings and \nspouses", "\t0", "2 or Less", "Greater than 2", "Parents and \nchildren", "\t0", "\t1", "Greater than 1", "Fare", "Less than 20", "Less than 50", "Greater than 50", "Port", "Cherbou", "Queenstown", "Southampton"};
   realstrings=realstringmaker;
   func=new function();
+  multi=loadImage("multi.png");
+  multi.resize(150,300);
+  onet=loadImage("onet.png");
+  onet.resize(300,300);
   trainpeople = new ArrayList<testperson>();
   testpeople= new ArrayList<testperson>();
   train = loadTable("train.csv", "header");
@@ -68,7 +73,7 @@ void mouseClicked() {
 void draw() {
   textAlign(LEFT);
   if (realsample==false && calculate==false) {
-    if (mouseX>200 && mouseX<350 && mouseY>725 && mouseY<775 && click) {
+    if (mouseX>200 && mouseX<350 && mouseY>725 && mouseY<775 && click && !matrixpage) {
       func.runcycle();
     }
     if (mouseX>400 && mouseX<550 && mouseY>725 && mouseY<775 && click) {
@@ -103,6 +108,9 @@ void draw() {
       if (mouseX>600 && mouseX<750 && mouseY>650 && mouseY<700 && click) {
         realsample=true;
       }
+    }
+    if (mouseX>600 && mouseX<750 && mouseY>575 && mouseY<625 && click) {
+      matrixpage=true;
     }
   }
   if (realsample) {
@@ -159,6 +167,28 @@ void draw() {
       for (int i=0; i<realpeople.length; i++) {
         realpeople[i]=false;
       }
+    }
+  }
+    if(matrixpage){
+      background(255);
+      fill(0);
+      textSize(12);
+    for(int i=0;i<frontweight.length;i++){
+      for(int j=0;j<frontweight[i].length;j++){
+        text(nf(frontweight[i][j],1,3),j*60,100+i*40);
+      }
+    }
+    image(multi,540,15);
+    for(int i=0;i<backweight[0].length;i++){
+      text(nf(backweight[0][i],1,3),200+i*60,550);
+    }
+    image(onet,440,395);
+    fill(150);
+    rect(100, 680, 200, 100);
+    fill(0);
+    text("BACK", 187, 735);
+    if (mouseX>100 && mouseX<300 && mouseY>680 && mouseY<780 && click) {
+     matrixpage=false;
     }
   }
   click=false;
